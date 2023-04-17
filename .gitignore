@@ -1,3 +1,10 @@
 venv
 .env
 temp.jpg
+build.ps1
+runmain.sh
+startup.sh
+startup.ps1
+curl.sh
+private.key
+cert.pem

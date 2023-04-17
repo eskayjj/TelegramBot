@@ -27,6 +27,11 @@ def post_request(photo):
             response = requests.post(url = URL, files=files)
             response_json = json.loads(response.text)
             value = response_json['result']
+        
+        if os.path.exists("temp.jpg"):
+            os.remove("temp.jpg")
+        else:
+            print("The file does not exist")
         return value
     except:
         traceback.print_exc()
@@ -51,7 +56,7 @@ async def uploadPhoto(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, I didn't understand that command.")
 
-if __name__ == '__main__':
+def main() -> None:
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     
     start_handler = CommandHandler('start', start)
@@ -62,4 +67,15 @@ if __name__ == '__main__':
     application.add_handler(upload_handler)
     application.add_handler(unknown_handler)
 
+    # application.run_webhook(
+    #     listen='0.0.0.0',
+    #     port=8443,
+    #     secret_token='awserdtfyuioxcfvgbhnjkmlrxdcfvgbhkjn',  #change this
+    #     key='private.key',      #generate SSL cert using openssl
+    #     cert='cert.pem',        #
+    #     webhook_url='https://mltelebot.com:8443'      #enable domains in GCP
+    #)
     application.run_polling()
+
+if __name__ == '__main__':
+    main()
